@@ -114,7 +114,7 @@ public class ConnectionServiceImpl implements ConnectionService {
 
                 User updatedSender = connect(senderId, countryName);
                 if (!updatedSender.getConnected()) {
-                    throw new Exception("Cannot establish communication");
+                    throw new Exception("Unable to connect");
 
                 } else return updatedSender;
             }
@@ -127,7 +127,7 @@ public class ConnectionServiceImpl implements ConnectionService {
                 String countryName = receiver.getOriginalCountry().getCountryName().toString();
                 User updatedSender = connect(senderId, countryName);
                 if (!updatedSender.getConnected()) {
-                    throw new Exception("Cannot establish communication");
+                    throw new Exception("Unable to connect");
                 } else return updatedSender;
 
             }
