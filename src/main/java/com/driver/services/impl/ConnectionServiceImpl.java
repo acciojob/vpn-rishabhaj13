@@ -88,6 +88,7 @@ public class ConnectionServiceImpl implements ConnectionService {
     }
     @Override
     public User communicate(int senderId, int receiverId) throws Exception {
+
         User sender = userRepository2.findById(senderId).get();
         User receiver = userRepository2.findById(receiverId).get();
 
@@ -112,13 +113,12 @@ public class ConnectionServiceImpl implements ConnectionService {
                 if (code.equals(CountryName.AUS.toCode()))
                     countryName = CountryName.AUS.toString();
 
-                User updatedSender = connect(senderId,countryName);
-                if(updatedSender.getConnected()){
-                    throw new Exception("Cannot establish communication");
-                }else{
+                try{
+                    User updatedSender = connect(senderId,countryName);
                     return updatedSender;
+                }catch (Exception e){
+                    throw new Exception("Cannot establish communication");
                 }
-
             }
         }else{
             if(receiver.getOriginalCountry().equals(sender.getOriginalCountry())){
@@ -126,11 +126,11 @@ public class ConnectionServiceImpl implements ConnectionService {
             }else{
                 String countryName = receiver.getOriginalCountry().getCountryName().toString();
 
-                User updatedSender = connect(senderId,countryName);
-                if(updatedSender.getConnected()){
+                try{
+                    User updatedSender = connect(senderId,countryName);
                     return updatedSender;
-                }else{
-                    return updatedSender;
+                }catch (Exception e){
+                    throw new Exception("Cannot establish communication");
                 }
             }
         }
